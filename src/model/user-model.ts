@@ -15,6 +15,7 @@ export type LoginResponse = {
     token: string
 }
 
+
 export type RegisterRequest = {
     name: string
     password: string

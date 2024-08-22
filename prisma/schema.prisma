@@ -13,14 +13,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum JenisKelamin {
+  P
+  L
+}
+
+enum GolonganDarah {
+  O
+  AB
+  A
+  B
+}
+
+enum Classification {
+  healthy
+  caries
+}
 
 model User {
-  id                Int              @id @default(autoincrement())
-  name              String           @db.VarChar(255)
-  email             String           @unique @db.VarChar(255)
-  password          String           @db.VarChar(255)
-  created_at        DateTime         @default(now())
-  updated_at        DateTime         @updatedAt
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(255)
+  email      String     @unique @db.VarChar(255)
+  password   String     @db.VarChar(255)
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  UserData   UserData[]
+  Capture    Capture[]
+  Journal    Journal[]
 
   @@map("users")
+}
+
+model UserData {
+  id             Int           @id @default(autoincrement())
+  user_id        Int
+  user           User          @relation(fields: [user_id], references: [id])
+  rekam_medis    String?       @db.VarChar(6)
+  nik            String        @db.VarChar(16)
+  jenis_kelamin  JenisKelamin
+  golongan_darah GolonganDarah
+  tempat_lahir   String        @db.VarChar(255)
+  tanggal_lahir  DateTime
+  alamat         String        @db.Text()
+  no_hp          String        @db.VarChar(13)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+
+  @@map("user_datas")
+}
+
+model Capture {
+  id         Int            @id @default(autoincrement())
+  user_id    Int
+  user       User           @relation(fields: [user_id], references: [id])
+  image      String         @db.VarChar(255)
+  class      Classification
+  result     String         @db.Text()
+  created_at DateTime       @default(now())
+
+  @@map("captures")
+}
+
+model Journal {
+  id      Int  @id @default(autoincrement())
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  @@map("journals")
+}
+
+model Blog {
+  id         String   @id @default(uuid())
+  title      String   @db.VarChar(255)
+  image      String   @db.VarChar(255)
+  source     String   @db.VarChar(255)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

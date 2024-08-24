@@ -2,7 +2,7 @@ import { Storage } from "@google-cloud/storage";
 import { ResponseErorr } from "../error/reponse-error";
 import { randomUUID } from "crypto";
 
-export async function uploadFile(dir: string, file: File){
+export async function uploadFile(dir: string, file: File, fileName: string){
     try {
         const projectId = process.env.PROJECT_ID
         const bucketName = process.env.BUCKET_NAME!
@@ -10,7 +10,8 @@ export async function uploadFile(dir: string, file: File){
 
         const re = /(?:\.([^.]+))?$/;
         const fileExt = re.exec(file.name)?.[0];
-        const fileLocation = `${dir}/${randomUUID()}${fileExt}`;
+        const fileLocation = `${dir}/${fileName}`;
+        console.log(file.name)
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);

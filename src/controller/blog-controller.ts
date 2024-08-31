@@ -24,4 +24,15 @@ export class BlogController {
             next(e)
         }
     }
+
+    static async latest(req: UserRequest, res: Response, next: NextFunction) {
+        try{
+            const response = await BlogService.latest()
+            res.status(200).json({
+                data: response
+            })
+        } catch (e) {
+            next(e)
+        }
+    }
 }

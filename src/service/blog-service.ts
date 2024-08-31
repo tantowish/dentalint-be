@@ -18,7 +18,22 @@ export class BlogService {
     }
 
     static async list(): Promise<BlogResponse[]> {
-        const blogs = await prismaClient.blog.findMany()
+        const blogs = await prismaClient.blog.findMany({
+            orderBy: {
+                updated_at: "desc"
+            }
+        })
+
+        return toBlogArrayResponse(blogs)
+    }
+
+    static async latest(): Promise<BlogResponse[]> {
+        const blogs = await prismaClient.blog.findMany({
+            orderBy: {
+                updated_at: 'desc'
+            },
+            take: 3
+        })
 
         return toBlogArrayResponse(blogs)
     }

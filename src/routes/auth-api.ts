@@ -21,9 +21,12 @@ apiRouter.post('/api/captures', upload.single('image'), CaptureController.create
 
 // Blog API
 apiRouter.get('/api/blogs', BlogController.list)
+apiRouter.get('/api/blogs/latest', BlogController.latest)
 apiRouter.get('/api/blogs/:id', BlogController.get)
 
 // Daily Notes API
 apiRouter.get('/api/notes', NoteController.list)
 apiRouter.get('/api/notes/:id', NoteController.get)
 apiRouter.post('/api/notes', NoteController.create)
+
+// Appointment API

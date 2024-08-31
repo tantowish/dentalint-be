@@ -50,15 +50,20 @@ CREATE TABLE "captures" (
 );
 
 -- CreateTable
-CREATE TABLE "journals" (
+CREATE TABLE "notes" (
     "id" SERIAL NOT NULL,
     "user_id" INTEGER NOT NULL,
+    "title" VARCHAR(255) NOT NULL DEFAULT 'toothbrushing',
+    "times" TEXT[],
+    "fnb" TEXT NOT NULL,
+    "note" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "journals_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "notes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Blog" (
+CREATE TABLE "blogs" (
     "id" TEXT NOT NULL,
     "title" VARCHAR(255) NOT NULL,
     "image" VARCHAR(255) NOT NULL,
@@ -66,7 +71,7 @@ CREATE TABLE "Blog" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Blog_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "blogs_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -79,4 +84,4 @@ ALTER TABLE "user_datas" ADD CONSTRAINT "user_datas_user_id_fkey" FOREIGN KEY ("
 ALTER TABLE "captures" ADD CONSTRAINT "captures_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "journals" ADD CONSTRAINT "journals_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "notes" ADD CONSTRAINT "notes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

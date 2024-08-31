@@ -3,6 +3,8 @@ import { UserController } from '../controller/user-controller'
 import { authMiddleware } from '../middleware/auth-middleware'
 import { CaptureController } from '../controller/capture-controller'
 import multer from 'multer';
+import { BlogController } from '../controller/blog-controller';
+import { NoteController } from '../controller/note-controller';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -14,4 +16,14 @@ apiRouter.use(authMiddleware)
 apiRouter.get('/api/users', UserController.get)
 apiRouter.patch('/api/users', UserController.update)
 
+// Capture API
 apiRouter.post('/api/captures', upload.single('image'), CaptureController.create)
+
+// Blog API
+apiRouter.get('/api/blogs', BlogController.list)
+apiRouter.get('/api/blogs/:id', BlogController.get)
+
+// Daily Notes API
+apiRouter.get('/api/notes', NoteController.list)
+apiRouter.get('/api/notes/:id', NoteController.get)
+apiRouter.post('/api/notes', NoteController.create)

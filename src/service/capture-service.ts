@@ -1,6 +1,6 @@
 import { Classification, User } from "@prisma/client";
 import { prismaClient } from "../app/database";
-import { CaptureRequest, CaptureResponse, toCaptureResponse } from "../model/capture-model";
+import { CaptureRequest, CaptureResponse, toCaptureArrayResponse, toCaptureResponse } from "../model/capture-model";
 import { uploadFile } from "../util/bucket-uploader";
 import { detection } from "../util/roboflow";
 import { CaptureValidation } from "../validation/capture-validation";
@@ -9,6 +9,7 @@ import { drawPredictions } from "../util/draw-predictions";
 import { arrayBufferToBuffer, toBase64 } from "../util/buffer-helper";
 import { randomUUID } from "crypto";
 import { runImageGemini } from "../util/gemini";
+import { ResponseErorr } from "../error/reponse-error";
 
 export class CaptureService {
     static async create(req: CaptureRequest, user: User): Promise<CaptureResponse>{
@@ -41,5 +42,36 @@ export class CaptureService {
 
 
         return toCaptureResponse(capture)
+    }
+
+    static async get(id: number, user: User): Promise<CaptureResponse> {
+        if (!id) {
+            throw new ResponseErorr(400, "id is invalid")
+        }
+        const capture = await prismaClient.capture.findUnique({
+            where: {
+                id: id,
+                user_id: user.id
+            }
+        })
+
+        if(!capture) {
+            throw new ResponseErorr(404, "capture not found")
+        }
+
+        return toCaptureResponse(capture)
+    }
+
+    static async list(user: User): Promise<CaptureResponse[]> {
+        const captures = await prismaClient.capture.findMany({
+            where: {
+                user_id: user.id
+            },
+            orderBy: {
+                created_at: "desc"
+            }
+        })
+
+        return toCaptureArrayResponse(captures)
     }
 }

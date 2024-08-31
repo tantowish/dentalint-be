@@ -25,3 +25,14 @@ export function toCaptureResponse(capture: Capture): CaptureResponse{
         created_at: moment(capture.created_at).tz(timezone).format('YYYY-MM-DD HH:mm:ss'),
     }
 }
+
+export function toCaptureArrayResponse(captures: Capture[]): CaptureResponse[]{
+    return captures.map(capture => ({
+        id: capture.id,
+        user_id: capture.user_id,
+        image: capture.image,
+        class: capture.class,
+        result: capture.result,
+        created_at: moment(capture.created_at).tz(timezone).format('YYYY-MM-DD HH:mm:ss'),
+    }))
+}

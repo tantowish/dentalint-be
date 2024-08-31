@@ -24,7 +24,7 @@ export class NoteService {
 
     static async get(id: number, user: User): Promise<NoteResponse> {
         if (!id) {
-            throw new ResponseErorr(500, "id is invalid")
+            throw new ResponseErorr(400, "id is invalid")
         }
         const note = await prismaClient.dailyNote.findUnique({
             where: {

@@ -17,4 +17,26 @@ export class CaptureController{
             next(e)
         }
     }
+
+    static async get(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            const response = await CaptureService.get(parseInt(req.params.id), req.user as User)
+            res.status(200).json({
+                data: response
+            })
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    static async list(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            const response = await CaptureService.list(req.user as User)
+            res.status(200).json({
+                data: response
+            })
+        } catch (e) {
+            next(e)
+        }
+    }
 }

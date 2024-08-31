@@ -17,6 +17,8 @@ apiRouter.get('/api/users', UserController.get)
 apiRouter.patch('/api/users', UserController.update)
 
 // Capture API
+apiRouter.get('/api/captures', CaptureController.list)
+apiRouter.get('/api/captures/:id', CaptureController.get)
 apiRouter.post('/api/captures', upload.single('image'), CaptureController.create)
 
 // Blog API

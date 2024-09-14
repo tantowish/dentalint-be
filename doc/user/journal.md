@@ -2,7 +2,7 @@
 
 ### Get List Journal
 
-Endpoint : GET /api/journals
+Endpoint : GET api/journals
 
 Request Header :
 

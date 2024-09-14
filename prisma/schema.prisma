@@ -36,15 +36,15 @@ enum AppointmentSchedule {
 }
 
 model User {
-  id         Int        @id @default(autoincrement())
-  name       String     @db.VarChar(255)
-  email      String     @unique @db.VarChar(255)
-  password   String     @db.VarChar(255)
-  created_at DateTime   @default(now())
-  updated_at DateTime   @updatedAt
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  email      String      @unique @db.VarChar(255)
+  password   String      @db.VarChar(255)
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
   Capture    Capture[]
-  DailyNote    DailyNote[]
-  Pasien Patient[]
+  DailyNote  DailyNote[]
+  Pasien     Patient[]
 
   @@map("users")
 }
@@ -62,14 +62,14 @@ model Capture {
 }
 
 model DailyNote {
-  id      Int  @id @default(autoincrement())
-  user_id Int
-  user    User @relation(fields: [user_id], references: [id])
-  title   String @db.VarChar(255) @default("toothbrushing")
-  times   String[] 
-  fnb String @db.Text()
-  note String? @db.Text()
-  created_at DateTime       @default(now())
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id])
+  title      String   @default("toothbrushing") @db.VarChar(255)
+  times      String[]
+  fnb        String   @db.Text()
+  note       String?  @db.Text()
+  created_at DateTime @default(now())
 
   @@map("notes")
 }
@@ -79,6 +79,7 @@ model Blog {
   title      String   @db.VarChar(255)
   image      String   @db.VarChar(255)
   source     String   @db.VarChar(255)
+  content    String   @db.Text()
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -86,49 +87,51 @@ model Blog {
 }
 
 model Patient {
-  rekam_medis String @id @db.VarChar(255)
-  user_id Int
-  user    User @relation(fields: [user_id], references: [id])
-  name String @db.VarChar(255)
-  nik String @db.VarChar(16)
-  jenis_kelamin JenisKelamin
+  rekam_medis    String        @id @db.VarChar(255)
+  user_id        Int
+  user           User          @relation(fields: [user_id], references: [id])
+  name           String        @db.VarChar(255)
+  nik            String        @db.VarChar(16)
+  jenis_kelamin  JenisKelamin
   golongan_darah GolonganDarah
-  tempat_lahir String @db.VarChar(255)
-  tanggal_lahir DateTime
-  alamat String @db.Text()
-  no_hp String @db.VarChar(13)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  tempat_lahir   String        @db.VarChar(255)
+  tanggal_lahir  DateTime
+  alamat         String        @db.Text()
+  no_hp          String        @db.VarChar(13)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+  Appoinment     Appoinment[]
 
   @@map("patients")
-  Appoinment Appoinment[]
 }
 
 model Clinic {
-  id Int @id @default(autoincrement())
-  clinic_name String @db.VarChar(255)
-  latitude String @db.VarChar(255)
-  longitude String @db.VarChar(255)
-  logo String @db.VarChar(255)
-  address String @db.Text()
-  link String @db.VarChar(255)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id          Int          @id @default(autoincrement())
+  clinic_name String       @db.VarChar(255)
+  latitude    String       @db.VarChar(255)
+  longitude   String       @db.VarChar(255)
+  logo        String       @db.VarChar(255)
+  address     String       @db.Text()
+  link        String       @db.VarChar(255)
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  Appoinment  Appoinment[]
 
   @@map("clinics")
-  Appoinment Appoinment[]
 }
 
 model Appoinment {
-  id String @db.VarChar(6) @id
+  id          String              @id @db.VarChar(6)
   rekam_medis String
-  patient Patient @relation(fields: [rekam_medis], references: [rekam_medis])
-  clinic_id Int
-  clinic Clinic @relation(fields: [clinic_id], references: [id])
-  schedule DateTime
-  status AppointmentSchedule
-  polyclinic String @db.VarChar(255)
-  paymet String @db.VarChar(255)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  patient     Patient             @relation(fields: [rekam_medis], references: [rekam_medis])
+  clinic_id   Int
+  clinic      Clinic              @relation(fields: [clinic_id], references: [id])
+  schedule    DateTime
+  status      AppointmentSchedule
+  polyclinic  String              @db.VarChar(255)
+  paymet      String              @db.VarChar(255)
+  created_at  DateTime            @default(now())
+  updated_at  DateTime            @updatedAt
+
+  @@map("appointments")
 }

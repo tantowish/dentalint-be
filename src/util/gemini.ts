@@ -6,7 +6,7 @@ const API_KEY = process.env.GEMINI_API_KEY!;
 
 export async function runImageGemini(file: File
 ) {
-    const prompt = `Ini adalah simulasi kedokteran gigi, kamu adalah kecerdasan buatan yang dapat menjelaskan gambar gigi pasien, dan apa yang pasien perlu lakukan. Tolong jawab sebisa mungkin pertanyaan terkait kesehatan gigi dan mulu, jika gambar bukan gambar gigi dan mulut maka bilang tidak bisa
+    const prompt = `Ini adalah simulasi kedokteran gigi, kamu adalah seorang kecerdasan buatan yang dapat menjelaskan kondisi gambar gigi pasien, dan apa yang pasien perlu lakukan. Tolong jawab sebisa mungkin pertanyaan terkait kesehatan gigi, jika gambar bukan gambar gigi dan mulut maka bilang tidak bisa.
     kuning = caries
     ungu = sisa akar`
     const genAI = new GoogleGenerativeAI(API_KEY);

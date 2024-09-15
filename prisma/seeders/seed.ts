@@ -1,5 +1,6 @@
 import { prismaClient } from "../../src/app/database";
 import { blogs } from "./blog-seeder";
+import { clinics } from "./clinic-seeder";
 import { users } from "./user-seeder";
 
 async function main() {
@@ -8,6 +9,9 @@ async function main() {
     })
     await prismaClient.blog.createMany({
         data: blogs
+    })
+    await prismaClient.clinic.createMany({
+        data: clinics
     })
 }
 

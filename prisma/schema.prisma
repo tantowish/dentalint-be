@@ -90,6 +90,8 @@ model Patient {
   rekam_medis    String        @id @db.VarChar(255)
   user_id        Int
   user           User          @relation(fields: [user_id], references: [id])
+  clinic_id      Int
+  clinic         Clinic        @relation(fields: [clinic_id], references: [id])
   name           String        @db.VarChar(255)
   nik            String        @db.VarChar(16)
   jenis_kelamin  JenisKelamin
@@ -116,12 +118,13 @@ model Clinic {
   created_at  DateTime     @default(now())
   updated_at  DateTime     @updatedAt
   Appoinment  Appoinment[]
+  Patient     Patient[]
 
   @@map("clinics")
 }
 
 model Appoinment {
-  id          String              @id @db.VarChar(6)
+  no_antrian  String              @id @db.VarChar(9)
   rekam_medis String
   patient     Patient             @relation(fields: [rekam_medis], references: [rekam_medis])
   clinic_id   Int
@@ -129,7 +132,7 @@ model Appoinment {
   schedule    DateTime
   status      AppointmentSchedule
   polyclinic  String              @db.VarChar(255)
-  paymet      String              @db.VarChar(255)
+  payment     String              @db.VarChar(255)
   created_at  DateTime            @default(now())
   updated_at  DateTime            @updatedAt
 

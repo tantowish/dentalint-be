@@ -64,6 +64,7 @@ CREATE TABLE "blogs" (
 CREATE TABLE "patients" (
     "rekam_medis" VARCHAR(255) NOT NULL,
     "user_id" INTEGER NOT NULL,
+    "clinic_id" INTEGER NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "nik" VARCHAR(16) NOT NULL,
     "jenis_kelamin" "JenisKelamin" NOT NULL,
@@ -94,18 +95,18 @@ CREATE TABLE "clinics" (
 );
 
 -- CreateTable
-CREATE TABLE "Appoinment" (
-    "id" VARCHAR(6) NOT NULL,
+CREATE TABLE "appointments" (
+    "no_antrian" VARCHAR(9) NOT NULL,
     "rekam_medis" TEXT NOT NULL,
     "clinic_id" INTEGER NOT NULL,
     "schedule" TIMESTAMP(3) NOT NULL,
     "status" "AppointmentSchedule" NOT NULL,
     "polyclinic" VARCHAR(255) NOT NULL,
-    "paymet" VARCHAR(255) NOT NULL,
+    "payment" VARCHAR(255) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Appoinment_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "appointments_pkey" PRIMARY KEY ("no_antrian")
 );
 
 -- CreateIndex
@@ -121,7 +122,10 @@ ALTER TABLE "notes" ADD CONSTRAINT "notes_user_id_fkey" FOREIGN KEY ("user_id") 
 ALTER TABLE "patients" ADD CONSTRAINT "patients_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Appoinment" ADD CONSTRAINT "Appoinment_rekam_medis_fkey" FOREIGN KEY ("rekam_medis") REFERENCES "patients"("rekam_medis") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "patients" ADD CONSTRAINT "patients_clinic_id_fkey" FOREIGN KEY ("clinic_id") REFERENCES "clinics"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Appoinment" ADD CONSTRAINT "Appoinment_clinic_id_fkey" FOREIGN KEY ("clinic_id") REFERENCES "clinics"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "appointments" ADD CONSTRAINT "appointments_rekam_medis_fkey" FOREIGN KEY ("rekam_medis") REFERENCES "patients"("rekam_medis") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "appointments" ADD CONSTRAINT "appointments_clinic_id_fkey" FOREIGN KEY ("clinic_id") REFERENCES "clinics"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

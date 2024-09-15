@@ -15,4 +15,5 @@ export class PatientController {
         } catch (e) {
             next(e)
         }
-    }}
+    }
+}

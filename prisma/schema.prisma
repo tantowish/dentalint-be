@@ -124,7 +124,7 @@ model Clinic {
 }
 
 model Appoinment {
-  no_antrian  String              @id @db.VarChar(9)
+  no_antrian  String              @id @db.VarChar(10)
   rekam_medis String
   patient     Patient             @relation(fields: [rekam_medis], references: [rekam_medis])
   clinic_id   Int

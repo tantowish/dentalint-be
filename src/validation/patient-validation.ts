@@ -1,6 +1,5 @@
 import { GolonganDarah, JenisKelamin } from "@prisma/client";
-import { title } from "process";
-import { string, z, ZodType } from "zod";
+import { z, ZodType } from "zod";
 
 export class PatientValidation {
     static readonly CREATE: ZodType = z.object({

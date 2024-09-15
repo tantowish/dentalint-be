@@ -7,6 +7,7 @@ import { BlogController } from '../controller/blog-controller';
 import { NoteController } from '../controller/note-controller';
 import { ClinicController } from '../controller/clinic-controller';
 import { PatientController } from '../controller/patient-controller';
+import { AppoinmentController } from '../controller/appointment-controller';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -41,3 +42,6 @@ apiRouter.get('/api/clinics', ClinicController.list)
 apiRouter.post('/api/patients', PatientController.create)
 
 // Appointment API
+apiRouter.get('/api/appointments/:id', AppoinmentController.get)
+apiRouter.get('/api/appointments', AppoinmentController.list)
+apiRouter.post('/api/appointments', AppoinmentController.create)

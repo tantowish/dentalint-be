@@ -96,7 +96,7 @@ CREATE TABLE "clinics" (
 
 -- CreateTable
 CREATE TABLE "appointments" (
-    "no_antrian" VARCHAR(9) NOT NULL,
+    "no_antrian" VARCHAR(10) NOT NULL,
     "rekam_medis" TEXT NOT NULL,
     "clinic_id" INTEGER NOT NULL,
     "schedule" TIMESTAMP(3) NOT NULL,

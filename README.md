@@ -10,7 +10,7 @@ Lorem Ipsum
 
 ```
 git clone https://github.com/tantowish/dentalint-be.git
-cd zenspire-be
+cd dentalint-be
 ```
 
 **Setup Environment**

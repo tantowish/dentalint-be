@@ -1,5 +1,5 @@
 {
-  "name": "zenspire-be",
+  "name": "dentalint-be",
   "version": "1.0.0",
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeders/seed.ts"

@@ -43,6 +43,9 @@ export class AppoinmentService {
             },
             include: {
                 clinic: true
+            },
+            orderBy: {
+                updated_at: 'desc'
             }
         })
 

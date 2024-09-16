@@ -7,6 +7,7 @@ export type BlogResponse = {
     title: string
     image: string
     source: string
+    content: string,
     created_at: string
     updated_at: string
 }
@@ -17,6 +18,7 @@ export function toBlogResponse(blog: Blog): BlogResponse {
         title: blog.title,
         image: blog.image,
         source: blog.source,
+        content: blog.content,
         created_at: moment(blog.created_at).tz(timezone).format('YYYY-MM-DD HH:mm:ss'), 
         updated_at: moment(blog.updated_at).tz(timezone).format('YYYY-MM-DD HH:mm:ss'),
     }
@@ -28,6 +30,7 @@ export function toBlogArrayResponse(blogs: Blog[]): BlogResponse[] {
         title: blog.title,
         image: blog.image,
         source: blog.source,
+        content: blog.content,
         created_at: moment(blog.created_at).tz(timezone).format('YYYY-MM-DD HH:mm:ss'), 
         updated_at: moment(blog.updated_at).tz(timezone).format('YYYY-MM-DD HH:mm:ss'),
     }))

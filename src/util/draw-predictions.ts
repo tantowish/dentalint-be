@@ -10,8 +10,24 @@ export async function drawPredictions(imageBuffer: Buffer, data: PredicitonResul
     const svgRects = data.predictions.map((prediction) => {
         const boxX = prediction.x - prediction.width / 2;
         const boxY = prediction.y - prediction.height / 2;
-        const strokeColor = prediction.class === 'Caries' ? 'yellow' : 
-                            prediction.class === 'Sisa Akar' ? 'red' : 'blue';
+        // color mapping logic
+        let strokeColor;
+        switch (prediction.class) {
+            case '-0-Healthy':
+                strokeColor = 'green';
+                break;
+            case '-1-Initial-Caries':
+                strokeColor = 'yellow';
+                break;
+            case '-2-Moderate-Caries':
+                strokeColor = 'orange';
+                break;
+            case '-3-Extensive-Caries':
+                strokeColor = 'red';
+                break;
+            default:
+                strokeColor = 'white';
+        }
         return `
             <rect x="${boxX}" y="${boxY}" width="${prediction.width}" height="${prediction.height}"
                 style="fill:none;stroke:${strokeColor};stroke-width:3" />

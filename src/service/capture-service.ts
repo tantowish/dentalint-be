@@ -5,11 +5,12 @@ import { uploadFile } from "../util/bucket-uploader";
 import { detection } from "../util/roboflow";
 import { CaptureValidation } from "../validation/capture-validation";
 import { Validation } from "../validation/validation";
-import { drawPredictions } from "../util/draw-predictions";
+import { drawPredictions, evaluatePredictionResult } from "../util/predictions-helper";
 import { arrayBufferToBuffer, toBase64 } from "../util/buffer-helper";
 import { randomUUID } from "crypto";
 import { runImageGemini } from "../util/gemini";
 import { ResponseErorr } from "../error/reponse-error";
+import { PredicitonResult } from "../types/prediciton";
 
 export class CaptureService {
     static async create(req: CaptureRequest, user: User): Promise<CaptureResponse>{
@@ -20,7 +21,7 @@ export class CaptureService {
 
         const arrayBuffer = await captureRequest.image.arrayBuffer();
         const imageBuffer = await arrayBufferToBuffer(arrayBuffer);
-        const drawBox = await drawPredictions(imageBuffer, data);
+        const drawBox = await drawPredictions(imageBuffer, data as PredicitonResult);
         const re = /(?:\.([^.]+))?$/;
         const fileExt = re.exec(captureRequest.image.name)?.[0]!;
         const fileName = `${randomUUID()}${fileExt}`
@@ -31,11 +32,13 @@ export class CaptureService {
         const imageUrl = `${process.env.BUCKER_URL}${uploadedImage}`
 
         const geminiRes = await runImageGemini(file)
+
+        const type = evaluatePredictionResult(data)
         const capture = await prismaClient.capture.create({
             data: {
                 user_id: user.id,
                 image: imageUrl,
-                class: Classification.caries,
+                class: type,
                 result: geminiRes
             }
         })

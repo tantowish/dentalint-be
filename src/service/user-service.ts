@@ -71,7 +71,7 @@ export class UserService {
             name: user.name,
         }
         const secretKey = process.env.SECRET_KEY!
-        const expiresIn = 60 * 60 * 24
+        const expiresIn = 60 * 60 * 24 * 7
         const token = jwt.sign(payload, secretKey, { expiresIn: expiresIn })
 
         return toUserLoginResponse(user, token)
